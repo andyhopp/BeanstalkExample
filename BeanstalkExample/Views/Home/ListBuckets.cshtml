@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Amazon.S3.Model.S3Bucket>
+@{
+    ViewBag.Title = "ListBuckets";
+}
+
+<h2>ListBuckets</h2>
+
+<ul>
+@foreach (var bucket in Model)
+{
+    <li>@bucket.BucketName</li>
+}
+</ul>
