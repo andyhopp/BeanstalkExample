@@ -47,5 +47,5 @@ steps:
   inputs:
     awsCredentials: 'AWS (andyhopp)'
     regionName: 'us-east-1'
-    message: 'A new BeanstalkExample version has been published! $(build.SourceBranchName):$(build SourceVersion)'
+    message: 'A new BeanstalkExample version has been published! $(build.SourceBranchName):$(build.SourceVersion)'
     topicArn: 'arn:aws:sns:us-east-1:982831078337:BeanstalkExample-Builds'
