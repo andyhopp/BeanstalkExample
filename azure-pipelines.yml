@@ -24,7 +24,7 @@ steps:
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
@@ -32,3 +32,13 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+
+- task: BeanstalkDeployApplication@1
+  inputs:
+    awsCredentials: 'AWS (andyhopp)'
+    regionName: 'us-east-1'
+    applicationName: 'BeanstalkExample'
+    environmentName: 'BeanstalkExample-azuredevops'
+    applicationType: 'aspnet'
+    webDeploymentArchive: '$(build.artifactStagingDirectory)\BeanstalkExample.zip'
+    description: 'Elastic Beanstalk example built in Azure DevOps'"
