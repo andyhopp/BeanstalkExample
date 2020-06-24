@@ -13,34 +13,34 @@ namespace BeanstalkExample
     public class Program
     {
         private const string RunAsServiceFlag = "--service";
-        public static async Task Main(string[] args)
+        public static int Main(string[] args)
         {
             if (args.Contains(RunAsServiceFlag))
             {
                 args = args.Where(a => a != RunAsServiceFlag).ToArray();
-                await RunAsService(args);
+                RunAsService(args).Build().Run();
             }
             else
             {
-                await RunInteractive(args);
+                RunInteractive(args).Build().Run();
             }
+            return 0;
         }
-        private static Task RunInteractive(String[] args) => 
+        private static IHostBuilder RunInteractive(String[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                })
-                .RunConsoleAsync();
+                });
 
-        private static async Task RunAsService(String[] args)
+        private static IHostBuilder RunAsService(String[] args)
         {
             var assemblyLocationFolder = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             if (string.Compare(Environment.CurrentDirectory, assemblyLocationFolder, StringComparison.OrdinalIgnoreCase) != 0)
             {
                 Environment.CurrentDirectory = assemblyLocationFolder;
             }
-            Host.CreateDefaultBuilder(args)
+            return Host.CreateDefaultBuilder(args)
                 .UseWindowsService()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

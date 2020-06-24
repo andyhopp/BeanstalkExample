@@ -1,30 +1,18 @@
 version: 0.2
 
-variables:
-    DOTNET_SDK_VERSION: 3.1.300
 phases:
     install:
         commands:
-        - |
-            if ! (dotnet --list-sdks | grep "^3.1.300"); then
-                DOTNET_SDK_DOWNLOAD_URL=https://dotnetcli.blob.core.windows.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-x64.tar.gz
-                curl -sSL $DOTNET_SDK_DOWNLOAD_URL --output dotnet.tar.gz
-                mkdir -p /usr/share/dotnet
-                tar -zxf dotnet.tar.gz -C /usr/share/dotnet
-                rm dotnet.tar.gz
-                if [ ! -L /usr/bin/dotnet ]; then
-                    ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
-                fi
-                if echo ":$PATH:" | grep -v -q ":~/.dotnet/tools/:"; then
-                    PATH="~/.dotnet/tools/:$PATH"
-                fi
-            fi
+        - dotnet tool install -g Microsoft.Web.LibraryManager.Cli
     build:
         commands:
         - mkdir -p build/publish
+        - pushd BeanstalkExample.Core
+        - libman restore
         - echo "Building with dotnet SDK Version $(dotnet --version)"
-        - dotnet publish -c Release -o build/publish
+        - dotnet publish -c Release -o ../build/publish
         - echo "Build completed."
+        - popd
     # Prepare for CodeDeploy deployment
         - cp src/codedeploy/appSpec.yml build/
 artifacts:

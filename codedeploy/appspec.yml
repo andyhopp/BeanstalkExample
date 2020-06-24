@@ -1,0 +1,18 @@
+version: 0.0
+os: windows
+files:
+  - source: .\publish
+    destination: c:\WebApp
+hooks:
+  ApplicationStop: 
+    - location: ./scripts/StopService.ps1
+      timeout: 60
+  AfterInstall: 
+    - location: ./scripts/RegisterService.ps1
+      timeout: 120
+  ApplicationStart: 
+    - location: ./scripts/StartService.ps1
+      timeout: 60
+  ValidateService: 
+    - location: ./scripts/SmokeTest.ps1
+      timeout: 60
