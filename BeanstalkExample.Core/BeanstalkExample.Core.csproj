@@ -18,7 +18,6 @@
     <PackageReference Include="Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel" Version="*" />
     <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="3.1.5" />
     <PackageReference Include="Microsoft.jQuery.Unobtrusive.Validation" Version="*" />
-    <PackageReference Include="Microsoft.Net.Compilers" Version="*" />
     <PackageReference Include="Newtonsoft.Json" Version="*" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="*" />
   </ItemGroup>

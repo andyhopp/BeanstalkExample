@@ -7,12 +7,13 @@ phases:
     build:
         commands:
         - mkdir -p build/publish
-        - pushd BeanstalkExample.Core
-        - libman restore
         - echo "Building with dotnet SDK Version $(dotnet --version)"
-        - dotnet publish -c Release -o ../build/publish
+        - |
+          pushd BeanstalkExample.Core
+          libman restore
+          dotnet publish -c Release -o ../build/publish
+          popd
         - echo "Build completed."
-        - popd
     # Prepare for CodeDeploy deployment
         - cp src/codedeploy/appSpec.yml build/
 artifacts:
