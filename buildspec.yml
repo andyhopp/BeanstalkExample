@@ -27,7 +27,7 @@ phases:
         - echo "Build completed."
     # Prepare for CodeDeploy deployment
         - cp src/codedeploy/appSpec.yml build/
-    artifacts:
-        files: [ 'build/publish/**/*' ]
-        name: PublishedBinaries
-        base-directory: build/publish
+artifacts:
+    files: [ 'build/publish/**/*' ]
+    name: PublishedBinaries
+    base-directory: build/publish
