@@ -197,3 +197,5 @@ FakesAssemblies/
 # FAKE - F# Make
 .fake/
 
+# Ignore libman files
+**/wwwroot/lib/
