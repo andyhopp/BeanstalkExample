@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2035
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeanstalkExample", "BeanstalkExample\BeanstalkExample.csproj", "{C0647D81-D194-44F3-A89B-E88368CD6665}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeanstalkExample.Core", "BeanstalkExample.Core\BeanstalkExample.Core.csproj", "{15CA3453-1204-4B42-B282-16F978B9161A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{C0647D81-D194-44F3-A89B-E88368CD6665}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0647D81-D194-44F3-A89B-E88368CD6665}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0647D81-D194-44F3-A89B-E88368CD6665}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15CA3453-1204-4B42-B282-16F978B9161A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15CA3453-1204-4B42-B282-16F978B9161A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15CA3453-1204-4B42-B282-16F978B9161A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15CA3453-1204-4B42-B282-16F978B9161A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
