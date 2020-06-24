@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeanstalkExample", "Beansta
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeanstalkExample.Core", "BeanstalkExample.Core\BeanstalkExample.Core.csproj", "{15CA3453-1204-4B42-B282-16F978B9161A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeBuild", "CodeBuild", "{276C6183-5440-41DA-BCAF-82AFE2427BE5}"
+	ProjectSection(SolutionItems) = preProject
+		buildSpec.yml = buildSpec.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
