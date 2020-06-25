@@ -1,2 +1,2 @@
 $ErrorActionPreference = 'Stop'
-Start-Service eShopOnWeb
+Start-Service WebApp

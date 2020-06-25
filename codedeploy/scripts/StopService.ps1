@@ -1,3 +1,3 @@
 $ErrorActionPreference = 'Stop'
-Stop-Service BeanstalkExample
-sc.exe delete BeanstalkExample
+Stop-Service WebApp
+Remove-Service WebApp
