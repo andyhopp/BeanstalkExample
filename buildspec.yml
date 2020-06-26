@@ -15,7 +15,12 @@ phases:
           popd
         - echo "Build completed."
     # Prepare for CodeDeploy deployment
-        - cp codedeploy/appspec.yml build/
+        - |
+          if [$TARGET_OS -eq "windows"]; then 
+            cp -r codedeploy/windows/appspec.yml build/
+          else
+            cp -r codedeploy/linux/appspec.yml build/
+          fi
 artifacts:
     files: [ '**/*' ]
     name: PublishedBinaries
