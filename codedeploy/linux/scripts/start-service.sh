@@ -1,2 +1,2 @@
 #!/bin/bash
-service eshop start
+service WebApp start

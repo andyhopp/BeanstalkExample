@@ -16,10 +16,11 @@ namespace Cdk
 {
     public class CdkStack : Stack
     {
-        const string SourceBucketName = "us-east-1.andyhoppatamazon.com";
-        const string SourceBucketKey = "samples/BeanstalkExample-6b24b8.zip";
+        public const string SourceBucketName = "us-east-1.andyhoppatamazon.com";
+        public static string SourceBucketKey { get; set; }
 
-        internal CdkStack(Construct scope, string id, IStackProps props = null) : base(scope, id, props)
+        internal CdkStack(Construct scope, string id, IStackProps props = null) : 
+            base(scope, id, props)
         {
             var targetPlatform = new CfnParameter(this, "TargetPlatform", new CfnParameterProps
             {
@@ -62,6 +63,11 @@ namespace Cdk
                     "New-Item -Path c:\\temp -ItemType Directory -Force",
                     $"Read-S3Object -BucketName aws-codedeploy-{this.Region}/latest -Key codedeploy-agent.msi -File c:\\temp\\codedeploy-agent.msi",
                     "Start-Process -Wait -FilePath c:\\temp\\codedeploy-agent.msi -WindowStyle Hidden"
+                    "echo 'Installing .NET Core...'",
+                    "wget -nv -O /usr/local/bin/dotnet-install.psq https://dot.net/v1/dotnet-install.ps1",
+                    "$DOTNET_31_SDK_VERSION=\"3.1.301\"",
+                    ".\\dotnet-install.ps1 -Version $DOTNET_31_SDK_VERSION",
+                    "dotnet --list-sdks"
                 );
                 selectedImage = new WindowsImage(
                     WindowsVersion.WINDOWS_SERVER_2019_ENGLISH_CORE_BASE,
@@ -87,7 +93,14 @@ namespace Cdk
                     "    echo \"CodeDeploy Agent installation failed, please investigate.\"",
                     "    rm -f /tmp/install",
                     "    exit 1",
-                    "fi"
+                    "fi",
+                    "echo 'Installing .NET Core...'",
+                    "wget -nv -O /usr/local/bin/dotnet-install.sh https://dot.net/v1/dotnet-install.sh",
+                    "chmod +x /usr/local/bin/dotnet-install.sh",
+                    "DOTNET_31_SDK_VERSION=\"3.1.301\"",
+                    "/usr/local/bin/dotnet-install.sh -v $DOTNET_31_SDK_VERSION",
+                    "dotnet --list-sdks",
+                    "rm -rf /tmp/*"
                 );
                 selectedImage = new AmazonLinuxImage(new AmazonLinuxImageProps
                 {

@@ -1,0 +1,81 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30128.74
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPNETExample", "ASPNETExample\ASPNETExample.csproj", "{C0647D81-D194-44F3-A89B-E88368CD6665}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASPNETExample.Core", "ASPNETExample.Core\ASPNETExample.Core.csproj", "{15CA3453-1204-4B42-B282-16F978B9161A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeBuild", "CodeBuild", "{276C6183-5440-41DA-BCAF-82AFE2427BE5}"
+	ProjectSection(SolutionItems) = preProject
+		buildspec.yml = buildspec.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CloudFormation", "CloudFormation", "{6A59DD36-B003-4E6A-88A7-7C8C789E5C94}"
+	ProjectSection(SolutionItems) = preProject
+		CloudFormation\DevOpsEnvironment.yml = CloudFormation\DevOpsEnvironment.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cdk", "CDK\Cdk.csproj", "{C0E6E516-EF65-4A1A-9584-692DB02481B4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeDeploy", "CodeDeploy", "{3939954F-F9EC-4F6E-88AE-FC83C9E27B2F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "windows", "windows", "{A9DECF9D-712E-4514-9A7E-8575B5873DC4}"
+	ProjectSection(SolutionItems) = preProject
+		codedeploy\windows\appspec.yml = codedeploy\windows\appspec.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "linux", "linux", "{575D5B52-EE9D-41CC-A093-E1FAB81793B0}"
+	ProjectSection(SolutionItems) = preProject
+		codedeploy\linux\appspec.yml = codedeploy\linux\appspec.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{98FCB7C0-9873-4238-BF55-FF8C740D1EC2}"
+	ProjectSection(SolutionItems) = preProject
+		codedeploy\linux\scripts\register-service.sh = codedeploy\linux\scripts\register-service.sh
+		codedeploy\linux\scripts\smoke-test.sh = codedeploy\linux\scripts\smoke-test.sh
+		codedeploy\linux\scripts\start-service.sh = codedeploy\linux\scripts\start-service.sh
+		codedeploy\linux\scripts\stop-service-sh = codedeploy\linux\scripts\stop-service-sh
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{6C125BFD-DC40-4B69-91BB-159EC5B57BF3}"
+	ProjectSection(SolutionItems) = preProject
+		codedeploy\windows\scripts\RegisterService.ps1 = codedeploy\windows\scripts\RegisterService.ps1
+		codedeploy\windows\scripts\SmokeTest.ps1 = codedeploy\windows\scripts\SmokeTest.ps1
+		codedeploy\windows\scripts\StartService.ps1 = codedeploy\windows\scripts\StartService.ps1
+		codedeploy\windows\scripts\StopService.ps1 = codedeploy\windows\scripts\StopService.ps1
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0647D81-D194-44F3-A89B-E88368CD6665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0647D81-D194-44F3-A89B-E88368CD6665}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0647D81-D194-44F3-A89B-E88368CD6665}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0647D81-D194-44F3-A89B-E88368CD6665}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15CA3453-1204-4B42-B282-16F978B9161A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15CA3453-1204-4B42-B282-16F978B9161A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15CA3453-1204-4B42-B282-16F978B9161A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15CA3453-1204-4B42-B282-16F978B9161A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0E6E516-EF65-4A1A-9584-692DB02481B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0E6E516-EF65-4A1A-9584-692DB02481B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0E6E516-EF65-4A1A-9584-692DB02481B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0E6E516-EF65-4A1A-9584-692DB02481B4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A9DECF9D-712E-4514-9A7E-8575B5873DC4} = {3939954F-F9EC-4F6E-88AE-FC83C9E27B2F}
+		{575D5B52-EE9D-41CC-A093-E1FAB81793B0} = {3939954F-F9EC-4F6E-88AE-FC83C9E27B2F}
+		{98FCB7C0-9873-4238-BF55-FF8C740D1EC2} = {575D5B52-EE9D-41CC-A093-E1FAB81793B0}
+		{6C125BFD-DC40-4B69-91BB-159EC5B57BF3} = {A9DECF9D-712E-4514-9A7E-8575B5873DC4}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {41D67C16-1152-4031-8733-E8A70B4101E8}
+	EndGlobalSection
+EndGlobal

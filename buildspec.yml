@@ -9,18 +9,14 @@ phases:
         - mkdir -p build/publish
         - echo "Building with dotnet SDK Version $(dotnet --version)"
         - |
-          pushd BeanstalkExample.Core
+          pushd ASPNETExample.Core
           libman restore
           dotnet publish -c Release -o ../build/publish
           popd
         - echo "Build completed."
     # Prepare for CodeDeploy deployment
-        - |
-          if [$TARGET_OS -eq "windows"]; then 
-            cp -r codedeploy/windows/appspec.yml build/
-          else
-            cp -r codedeploy/linux/appspec.yml build/
-          fi
+        - echo "Preparing deployment for '$TARGET_OS'..."
+        - cp -r codedeploy/$TARGET_OS/* build/
 artifacts:
     files: [ '**/*' ]
     name: PublishedBinaries
