@@ -4,6 +4,9 @@ files:
   - source: .\publish
     destination: c:\WebApp
 hooks:
+  BeforeInstall:
+    - location: ./scripts/InstallDotNet.ps1
+      timeout: 300
   ApplicationStop: 
     - location: ./scripts/StopService.ps1
       timeout: 60

@@ -4,6 +4,9 @@ files:
   - source: .\publish
     destination: /opt/dotnet-example
 hooks:
+  BeforeInstall:
+    - location: ./scripts/install-dotnet.sh
+      timeout: 300
   ApplicationStop: 
     - location: ./scripts/stop-service.sh
       timeout: 60
