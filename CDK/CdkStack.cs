@@ -62,7 +62,7 @@ namespace Cdk
                 userData.AddCommands(
                     "New-Item -Path c:\\temp -ItemType Directory -Force",
                     $"Read-S3Object -BucketName aws-codedeploy-{this.Region}/latest -Key codedeploy-agent.msi -File c:\\temp\\codedeploy-agent.msi",
-                    "Start-Process -Wait -FilePath c:\\temp\\codedeploy-agent.msi -WindowStyle Hidden"
+                    "Start-Process -Wait -FilePath c:\\temp\\codedeploy-agent.msi -WindowStyle Hidden",
                     "echo 'Installing .NET Core...'",
                     "wget -nv -O /usr/local/bin/dotnet-install.psq https://dot.net/v1/dotnet-install.ps1",
                     "$DOTNET_31_SDK_VERSION=\"3.1.301\"",
