@@ -168,6 +168,7 @@ namespace Cdk
                 VpcSubnets = new SubnetSelection { SubnetType = SubnetType.PRIVATE }
             });
             asg.Role.AddManagedPolicy(ManagedPolicy.FromAwsManagedPolicyName("AmazonSSMManagedInstanceCore"));
+            asg.Role.AddManagedPolicy(ManagedPolicy.FromAwsManagedPolicyName("AWSXRayDaemonWriteAccess"));
             Tag.Add(asg, "Application", StackName);
 
             var appSecurityGroup = new SecurityGroup(vpc, "AppSecurityGroup", new SecurityGroupProps
