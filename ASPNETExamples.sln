@@ -33,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "linux", "linux", "{575D5B52
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{98FCB7C0-9873-4238-BF55-FF8C740D1EC2}"
 	ProjectSection(SolutionItems) = preProject
-		install-dotnet.sh = install-dotnet.sh
+		codedeploy\Linux\scripts\install-dotnet.sh = codedeploy\Linux\scripts\install-dotnet.sh
 		codedeploy\linux\scripts\register-service.sh = codedeploy\linux\scripts\register-service.sh
 		codedeploy\linux\scripts\smoke-test.sh = codedeploy\linux\scripts\smoke-test.sh
 		codedeploy\linux\scripts\start-service.sh = codedeploy\linux\scripts\start-service.sh
