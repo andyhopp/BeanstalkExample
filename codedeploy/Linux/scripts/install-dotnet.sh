@@ -1,5 +1,5 @@
 DOTNET_31_SDK_VERSION="3.1.301"
-if ! (dotnet.exe --list-sdks | grep "^3\.1\.3")
+if [ ! -x "$(command -v dotnet)" ] || ! (dotnet --list-sdks | grep "^3\.1\.3")
 then
     echo 'Installing .NET Core...'
     get -nv -O /usr/local/bin/dotnet-install.sh https://dot.net/v1/dotnet-install.sh
