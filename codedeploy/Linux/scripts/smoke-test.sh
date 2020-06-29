@@ -1,4 +1,5 @@
 #!/bin/bash
+
 curl -s -S \
   --connect-timeout 5 \
   --max-time 10 \
