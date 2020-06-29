@@ -8,7 +8,6 @@ using Amazon.CDK.AWS.CodePipeline.Actions;
 using Amazon.CDK.AWS.EC2;
 using Amazon.CDK.AWS.ElasticLoadBalancingV2;
 using Amazon.CDK.AWS.IAM;
-using Amazon.CDK.AWS.Lambda;
 using Amazon.CDK.AWS.S3;
 using System.Collections.Generic;
 

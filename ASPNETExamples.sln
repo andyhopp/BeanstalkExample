@@ -33,6 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "linux", "linux", "{575D5B52
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{98FCB7C0-9873-4238-BF55-FF8C740D1EC2}"
 	ProjectSection(SolutionItems) = preProject
+		install-dotnet.sh = install-dotnet.sh
 		codedeploy\linux\scripts\register-service.sh = codedeploy\linux\scripts\register-service.sh
 		codedeploy\linux\scripts\smoke-test.sh = codedeploy\linux\scripts\smoke-test.sh
 		codedeploy\linux\scripts\start-service.sh = codedeploy\linux\scripts\start-service.sh
@@ -41,6 +42,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{98FC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{6C125BFD-DC40-4B69-91BB-159EC5B57BF3}"
 	ProjectSection(SolutionItems) = preProject
+		InstallDotNet.ps1 = InstallDotNet.ps1
 		codedeploy\windows\scripts\RegisterService.ps1 = codedeploy\windows\scripts\RegisterService.ps1
 		codedeploy\windows\scripts\SmokeTest.ps1 = codedeploy\windows\scripts\SmokeTest.ps1
 		codedeploy\windows\scripts\StartService.ps1 = codedeploy\windows\scripts\StartService.ps1
