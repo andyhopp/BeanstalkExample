@@ -1,3 +1,5 @@
+#!/bin/bash
+yum install -y zlib libcurl
 DOTNET_31_SDK_VERSION="3.1.301"
 if [ ! -x "$(command -v dotnet)" ] || ! (dotnet --list-sdks | grep "^3\.1\.3")
 then
