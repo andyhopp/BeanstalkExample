@@ -78,9 +78,8 @@ namespace Cdk
                 var userData = UserData.ForLinux(new LinuxUserDataOptions { Shebang = "#!/bin/bash -xe" });
                 userData.AddCommands(
                     "exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1",
-                    "yum -y update",
                     "yum install -y aws-cli ruby jq",
-                    "sleep 60s",
+                    "yum -y update",
                     "cd /tmp/",
                     $"curl -O https://aws-codedeploy-{this.Region}.s3.amazonaws.com/latest/install",
                     "chmod +x ./install",
