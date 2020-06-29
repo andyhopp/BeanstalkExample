@@ -23,9 +23,9 @@ namespace Cdk
         {
             var targetPlatform = new CfnParameter(this, "TargetPlatform", new CfnParameterProps
             {
-                AllowedValues = new[] { "Windows", "Linux" },
+                AllowedValues = new[] { "Linux", "Windows" },
                 Type = "String",
-                Default = "Windows"
+                Default = "Linux"
             });
 
             var vpc = new Vpc(this, "VPC", new VpcProps
@@ -55,6 +55,7 @@ namespace Cdk
         private LoadBalancedInstancesResult BuildLoadBalancedInstances(CfnParameter targetPlatform, Vpc vpc)
         {
             IMachineImage selectedImage;
+            
             if (targetPlatform.ValueAsString == "Windows")
             {
                 var userData = UserData.ForWindows();
@@ -77,6 +78,7 @@ namespace Cdk
                     "exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1",
                     "yum -y update",
                     "yum install -y aws-cli ruby jq",
+                    "sleep 60s",
                     "cd /tmp/",
                     $"curl -O https://aws-codedeploy-{this.Region}.s3.amazonaws.com/latest/install",
                     "chmod +x ./install",
@@ -96,7 +98,7 @@ namespace Cdk
                     Virtualization = AmazonLinuxVirt.HVM,
                     Generation = AmazonLinuxGeneration.AMAZON_LINUX_2,
                     Storage = AmazonLinuxStorage.EBS,
-                    UserData = userData
+                    UserData = userData                    
                 });
             };
 
@@ -135,6 +137,10 @@ namespace Cdk
                 LoadBalancer = alb
             });
 
+            new CfnCondition(this, "TargetWindows", new CfnConditionProps {
+              Expression = Fn.ConditionEquals(targetPlatform, "Windows")
+            });
+
             var asg = new AutoScalingGroup(this, "ApplicationASG", new AutoScalingGroupProps
             {
                 Vpc = vpc,
@@ -145,7 +151,7 @@ namespace Cdk
                     new Amazon.CDK.AWS.AutoScaling.BlockDevice() {
                         DeviceName = "/dev/xvda",
                         Volume = Amazon.CDK.AWS.AutoScaling.BlockDeviceVolume.Ebs(
-                            targetPlatform.ValueAsString == "Windows" ? 30 : 8,
+                            30,
                             new Amazon.CDK.AWS.AutoScaling.EbsDeviceOptions {
                                 VolumeType = Amazon.CDK.AWS.AutoScaling.EbsDeviceVolumeType.GP2,
                                 DeleteOnTermination = true
@@ -164,6 +170,7 @@ namespace Cdk
                 //}),
                 VpcSubnets = new SubnetSelection { SubnetType = SubnetType.PRIVATE }
             });
+            asg.Role.AddManagedPolicy(ManagedPolicy.FromAwsManagedPolicyName("AmazonSSMManagedInstanceCore"));
             Tag.Add(asg, "Application", StackName);
 
             var appSecurityGroup = new SecurityGroup(vpc, "AppSecurityGroup", new SecurityGroupProps
