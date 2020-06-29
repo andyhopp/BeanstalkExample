@@ -55,8 +55,10 @@ namespace Cdk
         private LoadBalancedInstancesResult BuildLoadBalancedInstances(CfnParameter targetPlatform, Vpc vpc)
         {
             IMachineImage selectedImage;
+
+            bool targetWindows = false;
             
-            if (targetPlatform.ValueAsString == "Windows")
+            if (targetWindows)
             {
                 var userData = UserData.ForWindows();
                 userData.AddCommands(
@@ -137,10 +139,6 @@ namespace Cdk
                 LoadBalancer = alb
             });
 
-            new CfnCondition(this, "TargetWindows", new CfnConditionProps {
-              Expression = Fn.ConditionEquals(targetPlatform, "Windows")
-            });
-
             var asg = new AutoScalingGroup(this, "ApplicationASG", new AutoScalingGroupProps
             {
                 Vpc = vpc,
@@ -151,7 +149,7 @@ namespace Cdk
                     new Amazon.CDK.AWS.AutoScaling.BlockDevice() {
                         DeviceName = "/dev/xvda",
                         Volume = Amazon.CDK.AWS.AutoScaling.BlockDeviceVolume.Ebs(
-                            30,
+                            targetWindows ? 30: 8,
                             new Amazon.CDK.AWS.AutoScaling.EbsDeviceOptions {
                                 VolumeType = Amazon.CDK.AWS.AutoScaling.EbsDeviceVolumeType.GP2,
                                 DeleteOnTermination = true
