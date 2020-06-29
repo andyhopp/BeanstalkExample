@@ -38,7 +38,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{98FC
 		codedeploy\linux\scripts\register-service.sh = codedeploy\linux\scripts\register-service.sh
 		codedeploy\linux\scripts\smoke-test.sh = codedeploy\linux\scripts\smoke-test.sh
 		codedeploy\linux\scripts\start-service.sh = codedeploy\linux\scripts\start-service.sh
-		codedeploy\linux\scripts\stop-service-sh = codedeploy\linux\scripts\stop-service-sh
+		codedeploy\linux\scripts\stop-service.sh = codedeploy\linux\scripts\stop-service.sh
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{6C125BFD-DC40-4B69-91BB-159EC5B57BF3}"
