@@ -39,11 +39,11 @@ namespace Cdk
                 throw new InvalidOperationException($"Empty archive! See {archiveFilename} for details.");
             try
             {
-                CdkStack.SourceBucketKey = $"samples/{System.IO.Path.GetFileName(archiveFilename)}";
+                CICD.SourceBucketKey = $"samples/{System.IO.Path.GetFileName(archiveFilename)}";
                 var s3Client = new Amazon.S3.AmazonS3Client();
                 await s3Client.PutObjectAsync(new Amazon.S3.Model.PutObjectRequest {
-                    BucketName = CdkStack.SourceBucketName,
-                    Key = CdkStack.SourceBucketKey,
+                    BucketName = CICD.SourceBucketName,
+                    Key = CICD.SourceBucketKey,
                     FilePath = archiveFilename
                 });
             }
@@ -55,7 +55,7 @@ namespace Cdk
                 }
             }
 
-            if (string.IsNullOrEmpty(CdkStack.SourceBucketKey))
+            if (string.IsNullOrEmpty(CICD.SourceBucketKey))
                 throw new InvalidOperationException("Missing key for source code!");
 
             var app = new App();

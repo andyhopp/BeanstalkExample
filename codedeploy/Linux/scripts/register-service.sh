@@ -7,7 +7,7 @@ cat > WebApp.service <<EOF
 Description=.NET Core App 
   
 [Service]  
-ExecStart=/opt/dotnet-example/ASPNETExample.Core
+ExecStart=/opt/dotnet-example/ASPNETExample.Core --service --urls=http://+:80
 EnvironmentFile=/etc/environment
 WorkingDirectory=/opt/dotnet-example/  
 Restart=on-failure  

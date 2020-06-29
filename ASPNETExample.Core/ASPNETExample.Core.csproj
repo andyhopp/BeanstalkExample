@@ -13,6 +13,7 @@
     <PackageReference Include="AWSSDK.S3" Version="*" />
     <PackageReference Include="AWSSDK.XRay" Version="3.3.102.53" />
     <PackageReference Include="AWSXRayRecorder.Handlers.AspNetCore" Version="2.7.1" />
+    <PackageReference Include="AWSXRayRecorder.Handlers.EntityFramework" Version="1.0.1" />
     <PackageReference Include="AWSXRayRecorder.Handlers.SqlServer" Version="2.7.1" />
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.447" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="*" />
@@ -24,6 +25,7 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="3.1.5" />
     <PackageReference Include="Microsoft.jQuery.Unobtrusive.Validation" Version="*" />
     <PackageReference Include="Newtonsoft.Json" Version="*" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.1" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="*" />
   </ItemGroup>
 

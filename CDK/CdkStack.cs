@@ -15,8 +15,8 @@ namespace Cdk
 {
     public class CdkStack : Stack
     {
-        public const string SourceBucketName = "us-east-1.andyhoppatamazon.com";
-        public static string SourceBucketKey { get; set; }
+        //public const string SourceBucketName = "us-east-1.andyhoppatamazon.com";
+        //public static string SourceBucketKey { get; set; }
 
         internal CdkStack(Construct scope, string id, IStackProps props = null) : 
             base(scope, id, props)
@@ -42,16 +42,13 @@ namespace Cdk
                 }
             });
 
-            var instancesResult = BuildLoadBalancedInstances(targetPlatform, vpc);
-            BuildCICD(targetPlatform, instancesResult);
+            var instances = new AutoScaledInstances(this, targetPlatform, vpc);
+            new CICD(this, targetPlatform, instances.Result);
+            //var instancesResult = BuildLoadBalancedInstances(targetPlatform, vpc);
+            //BuildCICD(targetPlatform, instancesResult);
         }
 
-        private class LoadBalancedInstancesResult
-        {
-            public AutoScalingGroup AutoScalingGroup { get; set; }
-            public ApplicationTargetGroup TargetGroup { get; set; }
-        }
-
+#if DONTUSE
         private LoadBalancedInstancesResult BuildLoadBalancedInstances(CfnParameter targetPlatform, Vpc vpc)
         {
             IMachineImage selectedImage;
@@ -419,5 +416,6 @@ namespace Cdk
                 }
             });
         }
+#endif
     }
 }
