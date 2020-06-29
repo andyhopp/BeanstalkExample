@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: .\publish
+  - source: ./publish
     destination: /opt/dotnet-example
 hooks:
   BeforeInstall:
