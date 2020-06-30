@@ -1,16 +1,8 @@
 using Amazon.CDK;
 using Amazon.CDK.AWS.AutoScaling;
-using Amazon.CDK.AWS.CodeBuild;
-using Amazon.CDK.AWS.CodeCommit;
-using Amazon.CDK.AWS.CodeDeploy;
-using Amazon.CDK.AWS.CodePipeline;
-using Amazon.CDK.AWS.CodePipeline.Actions;
 using Amazon.CDK.AWS.EC2;
 using Amazon.CDK.AWS.ElasticLoadBalancingV2;
 using Amazon.CDK.AWS.IAM;
-using Amazon.CDK.AWS.S3;
-using Amazon.CDK.AWS.SecretsManager;
-using System.Collections.Generic;
 
 namespace Cdk
 {
@@ -129,15 +121,6 @@ namespace Cdk
                         )}
                 },
                 AssociatePublicIpAddress = false,
-                //Role = new Role(stack, "AppInstanceRole", new RoleProps
-                //{
-                //    AssumedBy = new ServicePrincipal("ec2.amazonaws.com"),
-                //    Description = "Allows SSM and CodeDeploy access.",
-                //    ManagedPolicies = new[] {
-                //            ManagedPolicy.FromAwsManagedPolicyName("AmazonSSMManagedInstanceCore"),
-                //            ManagedPolicy.FromAwsManagedPolicyName("service-role/AmazonEC2RoleforAWSCodeDeploy"),
-                //        }
-                //}),
                 VpcSubnets = new SubnetSelection { SubnetType = SubnetType.PRIVATE }
             });
             //asg.Role.AttachInlinePolicy(new Policy(stack, "DBPasswordSecretAccess", new PolicyProps { 
@@ -154,6 +137,7 @@ namespace Cdk
             //}));
             asg.Role.AddManagedPolicy(ManagedPolicy.FromAwsManagedPolicyName("AmazonSSMManagedInstanceCore"));
             asg.Role.AddManagedPolicy(ManagedPolicy.FromAwsManagedPolicyName("AWSXRayDaemonWriteAccess"));
+            asg.Role.AddManagedPolicy(ManagedPolicy.FromAwsManagedPolicyName("CloudWatchAgentServerPolicy"));
             Tag.Add(asg, "Application", stack.StackName);
 
             // Enable access from the ALB

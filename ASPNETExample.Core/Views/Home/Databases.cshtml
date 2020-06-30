@@ -1,0 +1,16 @@
+﻿@model IEnumerable<string>
+
+@{
+    ViewData["Title"] = "Databases";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Databases</h2>
+
+<ul>
+@foreach (var item in Model) {
+    <li>
+        @item
+    </li>
+}
+</ul>
