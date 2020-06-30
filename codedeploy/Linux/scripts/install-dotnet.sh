@@ -17,7 +17,7 @@ else
     echo '.NET Core SDK 3.1.3XX detected.'
 fi
 
-if ( systemctl list-units --full -all | grep -v -Eq "^\\s+xray.service" )
+if ! ( systemctl list-units --full -all | grep -Fq "xray.service" )
 then
   echo 'Installing X-Ray daemon...'
   curl -o /tmp/aws-xray-daemon-3.x.rpm https://s3.us-east-2.amazonaws.com/aws-xray-assets.us-east-2/xray-daemon/aws-xray-daemon-3.x.rpm
