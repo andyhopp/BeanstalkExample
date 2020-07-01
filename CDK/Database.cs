@@ -29,7 +29,7 @@ namespace Cdk
                 Vpc = vpc,
                 VpcPlacement = new SubnetSelection { SubnetType = SubnetType.PRIVATE },
                 SecurityGroups = new[] { dbSecurityGroup },
-                DatabaseName = $"{stack.StackName.ToLower()}-database",
+                //DatabaseName = $"{stack.StackName.ToLower()}-database",
                 Engine = DatabaseInstanceEngine.SQL_SERVER_EX,
                 MasterUsername = "sa",
                 MasterUserPassword = Password.SecretValue,
