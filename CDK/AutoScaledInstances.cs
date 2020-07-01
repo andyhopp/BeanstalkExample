@@ -78,7 +78,7 @@ namespace Cdk
                 });
             };
 
-            var alb = new ApplicationLoadBalancer(stack, "ApplicationLoadBalancer", new ApplicationLoadBalancerProps
+            var alb = new ApplicationLoadBalancer(stack, $"ApplicationLoadBalancer-{(publicAccess ? "public" : "private")}", new ApplicationLoadBalancerProps
             {
                 InternetFacing = true,
                 Vpc = vpc,
@@ -88,7 +88,7 @@ namespace Cdk
                 Http2Enabled = true                
             });
             
-            var albTargetGroup = new ApplicationTargetGroup(stack, "ApplicationTargetGroup", new ApplicationTargetGroupProps
+            var albTargetGroup = new ApplicationTargetGroup(stack, $"ApplicationTargetGroup-{(publicAccess ? "public" : "private")}", new ApplicationTargetGroupProps
             {
                 Vpc = vpc,
                 Port = 80,
@@ -101,7 +101,7 @@ namespace Cdk
                     HealthyThresholdCount = 2
                 }
             });
-            var albListener = new ApplicationListener(stack, "ApplicationListener", new ApplicationListenerProps
+            var albListener = new ApplicationListener(stack, $"ApplicationListener-{(publicAccess ? "public" : "private")}", new ApplicationListenerProps
             {
                 Port = 80,
                 Protocol = ApplicationProtocol.HTTP,
@@ -109,7 +109,7 @@ namespace Cdk
                 LoadBalancer = alb
             });
 
-            var asg = new AutoScalingGroup(stack, "ApplicationASG", new AutoScalingGroupProps
+            var asg = new AutoScalingGroup(stack, $"ASG-{(publicAccess ? "public" : "private")}", new AutoScalingGroupProps
             {
                 Vpc = vpc,
                 MinCapacity = 2,

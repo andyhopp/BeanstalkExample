@@ -37,6 +37,7 @@ namespace Cdk
                 MultiAz = false,
                 InstanceType = InstanceType.Of(InstanceClass.BURSTABLE3, InstanceSize.SMALL)
             });
+            ServerAddress = db.DbInstanceEndpointAddress;
         }
     }
 }

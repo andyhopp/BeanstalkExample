@@ -127,12 +127,12 @@ namespace Cdk
                         Actions = new []
                         {
                             new CodeDeployServerDeployAction(new CodeDeployServerDeployActionProps {
-                                ActionName = "CodeDeploy",
+                                ActionName = "DeployFrontEnd",
                                 DeploymentGroup = frontEndDeploymentGroup,
                                 Input = frontEndArtifacts
                             }),
                             new CodeDeployServerDeployAction(new CodeDeployServerDeployActionProps {
-                                ActionName = "CodeDeploy",
+                                ActionName = "DeployRESTAPI",
                                 DeploymentGroup = restApiDeploymentGroup,
                                 Input = restAPIArtifacts
                             })
