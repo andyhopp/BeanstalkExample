@@ -69,8 +69,8 @@ namespace Cdk
                         })
                     }
                 });
-            var restApiInstances = new AutoScaledInstances(this, targetPlatform, vpc, false, internalLoadBalancerSecurityGroup, restApiSecurityGroup, db, policy);
-            var frontEndInstances = new AutoScaledInstances(this, targetPlatform, vpc, true, externalLoadBalancerSecurityGroup, frontEndSecurityGroup, db, restApiLoadBalancer: restApiInstances.Result.LoadBalancer);
+            var restApiInstances = new AutoScaledInstances(this, targetPlatform, vpc, false, internalLoadBalancerSecurityGroup, restApiSecurityGroup, db, policy: policy);
+            var frontEndInstances = new AutoScaledInstances(this, targetPlatform, vpc, true, externalLoadBalancerSecurityGroup, frontEndSecurityGroup, restApiLoadBalancer: restApiInstances.Result.LoadBalancer);
             //var instances = new AutoScaledInstances(this, targetPlatform, vpc, appSecurityGroup);
             new CICD(this, targetPlatform, frontEndInstances.Result, restApiInstances.Result);
         }

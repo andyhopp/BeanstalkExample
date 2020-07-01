@@ -26,10 +26,10 @@ phases:
         - cp -r codedeploy/frontEnd/$TARGET_OS/* build/frontEnd/
         - cp -r codedeploy/restAPI/$TARGET_OS/* build/restAPI/
 artifacts:
-    files: [ '**/*' ]
-    name: FrontEnddOutput
-    base-directory: build/frontEnd
     secondary-artifacts:
+        FrontEndOutput:
+            files: [ '**/*' ]
+            base-directory: build/frontEnd
         RESTAPIOutput:
             files: [ '**/*' ]
             base-directory: build/restAPI

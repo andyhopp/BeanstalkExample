@@ -10,13 +10,11 @@ namespace Cdk
 {
     internal class Database
     {
-        internal Secret Password { get; }
+        internal ISecret Password { get; }
         public string ServerAddress { get; internal set; }
 
         internal Database(CdkStack stack, Vpc vpc, SecurityGroup asgSecurityGroup)
-        {
-            Password = new Secret(stack, "DBPassword");
-            
+        {            
             var dbSecurityGroup = new SecurityGroup(vpc, "DBSecurityGroup", new SecurityGroupProps
             {
                 Vpc = vpc,
@@ -32,12 +30,12 @@ namespace Cdk
                 //DatabaseName = $"{stack.StackName.ToLower()}-database",
                 Engine = DatabaseInstanceEngine.SQL_SERVER_EX,
                 MasterUsername = "sa",
-                MasterUserPassword = Password.SecretValue,
                 AllocatedStorage = 20,
                 MultiAz = false,
                 InstanceType = InstanceType.Of(InstanceClass.BURSTABLE3, InstanceSize.SMALL)
             });
             ServerAddress = db.DbInstanceEndpointAddress;
+            Password = db.Secret;
         }
     }
 }

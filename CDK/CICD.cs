@@ -86,7 +86,7 @@ namespace Cdk
                 AutoScalingGroups = new[] { restAPIInstanceInfo.AutoScalingGroup }
             });
             var sourceOutput = new Artifact_();
-            var frontEndArtifacts = new Artifact_("FrontEnddOutput");
+            var frontEndArtifacts = new Artifact_("FrontEndOutput");
             var restAPIArtifacts = new Artifact_("RESTAPIOutput");
             var pipeline = new Pipeline(stack, "ApplicationPipeline", new PipelineProps
             {
