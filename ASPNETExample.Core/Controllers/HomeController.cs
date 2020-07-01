@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Amazon.Runtime.Internal.Auth;
+using Amazon.XRay.Recorder.Handlers.System.Net;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -28,21 +32,16 @@ namespace ASPNETExample.Controllers
             return View();
         }
 
-        public ActionResult Databases()
+        public async Task<ActionResult> Databases()
         {
-            var databases = new List<string>();
-            using (var sqlConnection = new System.Data.SqlClient.SqlConnection("Server=sqldemo.cym2zbbhngsn.us-east-1.rds.amazonaws.com;Initial Catalog=master;User ID=sa;Password=P0rsche1"))
-            using (var sqlCommand = new Amazon.XRay.Recorder.Handlers.SqlServer.TraceableSqlCommand("SELECT name from sys.databases", sqlConnection, true))
-            {
-                sqlCommand.Connection.Open();
-                using (var reader = sqlCommand.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        databases.Add(reader.GetString(0));
-                    }
-                }
-            }
+            var tags = await new Amazon.EC2.AmazonEC2Client().DescribeTagsAsync();
+            var restApiAddressTag = tags.Tags.FirstOrDefault(T => T.Key == "RESTAPIAddress");
+            var serverAddress = new UriBuilder(restApiAddressTag.Value);
+            serverAddress.Path = "Database";
+
+            var client = new HttpClient(new HttpClientXRayTracingHandler(new HttpClientHandler()));
+            var databasesResponse = await client.GetAsync(serverAddress.Uri);
+            var databases = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<string>>(await databasesResponse.Content.ReadAsStringAsync());
             return View(databases);
         }
     }

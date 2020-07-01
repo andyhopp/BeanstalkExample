@@ -5,17 +5,17 @@ files:
     destination: /opt/dotnet-example
 hooks:
   BeforeInstall:
-    - location: ./scripts/install-dotnet.sh
+    - location: scripts/install-dotnet.sh
       timeout: 300
   ApplicationStop: 
-    - location: ./scripts/stop-service.sh
+    - location: scripts/stop-service.sh
       timeout: 60
   AfterInstall: 
-    - location: ./scripts/register-service.sh
+    - location: scripts/register-service.sh
       timeout: 120
   ApplicationStart: 
-    - location: ./scripts/start-service.sh
+    - location: scripts/start-service.sh
       timeout: 60
   ValidateService: 
-    - location: ./scripts/smoke-test.sh
+    - location: scripts/smoke-test.sh
       timeout: 60

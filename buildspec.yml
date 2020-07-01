@@ -6,18 +6,31 @@ phases:
         - dotnet tool install -g Microsoft.Web.LibraryManager.Cli
     build:
         commands:
-        - mkdir -p build/publish
+        - mkdir -p build/frontEnd/publish
+        - mkdir -p build/restAPI/publish
         - echo "Building with dotnet SDK Version $(dotnet --version)"
         - |
+          echo "Building front-end code..."
           pushd ASPNETExample.Core
           libman restore
-          dotnet publish -c Release -o ../build/publish
+          dotnet publish -c Release -o ../build/publish/frontEnd
+          popd
+        - |
+          echo "Building REST API code..."
+          pushd ASPNETExample.Core.API
+          dotnet publish -c Release -o ../build/publish/restAPI
           popd
         - echo "Build completed."
     # Prepare for CodeDeploy deployment
         - echo "Preparing deployment for '$TARGET_OS'..."
-        - cp -r codedeploy/$TARGET_OS/* build/
+        - cp -r codedeploy/frontEnd/$TARGET_OS/* build/frontEnd/
+        - cp -r codedeploy/restAPI/$TARGET_OS/* build/restAPI/
 artifacts:
     files: [ '**/*' ]
-    name: PublishedBinaries
-    base-directory: build
+    name: FrontEnddOutput
+    base-directory: build/frontEnd
+    secondary-artifacts:
+        RESTAPIOutput:
+            files: [ '**/*' ]
+            base-directory: build/restAPI
+            

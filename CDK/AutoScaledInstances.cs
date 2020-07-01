@@ -3,6 +3,7 @@ using Amazon.CDK.AWS.AutoScaling;
 using Amazon.CDK.AWS.EC2;
 using Amazon.CDK.AWS.ElasticLoadBalancingV2;
 using Amazon.CDK.AWS.IAM;
+using Amazon.CDK.AWS.SecretsManager;
 
 namespace Cdk
 {
@@ -10,12 +11,22 @@ namespace Cdk
     {
         public AutoScalingGroup AutoScalingGroup { get; set; }
         public ApplicationTargetGroup TargetGroup { get; set; }
+        public ApplicationLoadBalancer LoadBalancer { get; internal set; }
     }
 
     internal class AutoScaledInstances
     {
         internal LoadBalancedInstancesResult Result { get; }
-        internal AutoScaledInstances(CdkStack stack, CfnParameter targetPlatform, Vpc vpc, SecurityGroup appSecurityGroup) //, Secret password)
+        internal AutoScaledInstances(
+            CdkStack stack, 
+            CfnParameter targetPlatform, 
+            Vpc vpc, 
+            bool publicAccess, 
+            SecurityGroup albSecurityGroup, 
+            SecurityGroup instanceSecurityGroup, 
+            Database database = null, 
+            Policy policy = null,
+            ApplicationLoadBalancer restApiLoadBalancer = null)
         {
             IMachineImage selectedImage;
 
@@ -66,22 +77,17 @@ namespace Cdk
                     UserData = userData                    
                 });
             };
-            
 
-            var albSecurityGroup = new SecurityGroup(vpc, "LoadBalancerSecurityGroup", new SecurityGroupProps
-            {
-                Vpc = vpc,
-                Description = "Allows HTTP access to the application."
-            });
             var alb = new ApplicationLoadBalancer(stack, "ApplicationLoadBalancer", new ApplicationLoadBalancerProps
             {
                 InternetFacing = true,
                 Vpc = vpc,
-                VpcSubnets = new SubnetSelection { SubnetType = SubnetType.PUBLIC },
+                VpcSubnets = new SubnetSelection { SubnetType = publicAccess ? SubnetType.PUBLIC : SubnetType.PRIVATE },
                 SecurityGroup = albSecurityGroup,
                 IpAddressType = IpAddressType.IPV4,
-                Http2Enabled = true
+                Http2Enabled = true                
             });
+            
             var albTargetGroup = new ApplicationTargetGroup(stack, "ApplicationTargetGroup", new ApplicationTargetGroupProps
             {
                 Vpc = vpc,
@@ -123,30 +129,45 @@ namespace Cdk
                 AssociatePublicIpAddress = false,
                 VpcSubnets = new SubnetSelection { SubnetType = SubnetType.PRIVATE }
             });
-            //asg.Role.AttachInlinePolicy(new Policy(stack, "DBPasswordSecretAccess", new PolicyProps { 
-            //    PolicyName = "AllowPasswordAccess",
-            //    Statements = new[] {
-            //        new PolicyStatement(new PolicyStatementProps {
-            //            Effect = Effect.ALLOW,
-            //            Actions = new [] {
-            //                "secretsmanager:GetSecretValue"
-            //            },
-            //            Resources = new [] { password.SecretArn }
-            //        })
-            //    }
-            //}));
+            if (policy != null)
+            {
+                asg.Role.AttachInlinePolicy(policy);
+            }
+            asg.Role.AddToPrincipalPolicy(
+                new PolicyStatement(new PolicyStatementProps
+                {
+                    Effect = Effect.ALLOW,
+                    Actions = new[] { "ec2:DescribeTags" },
+                    Resources = new[] { "*" }
+                })
+            );
             asg.Role.AddManagedPolicy(ManagedPolicy.FromAwsManagedPolicyName("AmazonSSMManagedInstanceCore"));
             asg.Role.AddManagedPolicy(ManagedPolicy.FromAwsManagedPolicyName("AWSXRayDaemonWriteAccess"));
             asg.Role.AddManagedPolicy(ManagedPolicy.FromAwsManagedPolicyName("CloudWatchAgentServerPolicy"));
+
             Tag.Add(asg, "Application", stack.StackName);
+            if (publicAccess)
+            {
+                Tag.Add(asg, "ApplicationRole", "Front End");
+                Tag.Add(asg, "RESTAPIAddress", restApiLoadBalancer.LoadBalancerDnsName);
+            }
+            else
+            {
+                Tag.Add(asg, "ApplicationRole", "REST API");
+            }
+            if (database != null)
+            {
+                Tag.Add(asg, "DatabaseAddress", database.ServerAddress);
+                Tag.Add(asg, "PasswordArn", database.Password.SecretArn);
+            }
 
             // Enable access from the ALB
-            appSecurityGroup.AddIngressRule(albSecurityGroup, Port.Tcp(80), "Allow HTTP");
-            asg.AddSecurityGroup(appSecurityGroup);
+            asg.AddSecurityGroup(instanceSecurityGroup);
             Result = new LoadBalancedInstancesResult
             {
                 AutoScalingGroup = asg,
-                TargetGroup = albTargetGroup
+                TargetGroup = albTargetGroup,
+                LoadBalancer = alb
             };
         }
     }

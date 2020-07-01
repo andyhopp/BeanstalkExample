@@ -29,16 +29,50 @@ namespace Cdk
                 }
             });
 
-            var appSecurityGroup = new SecurityGroup(vpc, "AppSecurityGroup", new SecurityGroupProps
+            var externalLoadBalancerSecurityGroup = new SecurityGroup(vpc, "ExternalLoadBalancerSecurityGroup", new SecurityGroupProps
             {
                 Vpc = vpc,
                 Description = "Allows HTTP access to the application."
             });
+            var frontEndSecurityGroup = new SecurityGroup(vpc, "UISecurityGroup", new SecurityGroupProps
+            {
+                Vpc = vpc,
+                Description = "Allows HTTP access to the UI."
+            });
+            frontEndSecurityGroup.AddIngressRule(externalLoadBalancerSecurityGroup, Port.Tcp(80), "Allow HTTP");
+            var internalLoadBalancerSecurityGroup = new SecurityGroup(vpc, "InternalLoadBalancerSecurityGroup", new SecurityGroupProps
+            {
+                Vpc = vpc,
+                Description = "Allows HTTP access to the REST API."
+            });
+            var restApiSecurityGroup = new SecurityGroup(vpc, "ApiSecurityGroup", new SecurityGroupProps
+            {
+                Vpc = vpc,
+                Description = "Allows HTTP access to the Rest API."
+            });
 
-            //var db = new Database(this, vpc, appSecurityGroup);
-            //var instances = new AutoScaledInstances(this, targetPlatform, vpc, appSecurityGroup, db.Password);
-            var instances = new AutoScaledInstances(this, targetPlatform, vpc, appSecurityGroup);
-            new CICD(this, targetPlatform, instances.Result);
+
+            var db = new Database(this, vpc, restApiSecurityGroup);
+
+            var policy = new Amazon.CDK.AWS.IAM.Policy(this, 
+                "DBPasswordSecretAccess",
+                new Amazon.CDK.AWS.IAM.PolicyProps
+                {
+                    PolicyName = "AllowPasswordAccess",
+                    Statements = new[] {
+                        new Amazon.CDK.AWS.IAM.PolicyStatement(new Amazon.CDK.AWS.IAM.PolicyStatementProps {
+                            Effect = Amazon.CDK.AWS.IAM.Effect.ALLOW,
+                            Actions = new [] {
+                                "secretsmanager:GetSecretValue"
+                            },
+                            Resources = new [] { db.Password.SecretArn }
+                        })
+                    }
+                });
+            var restApiInstances = new AutoScaledInstances(this, targetPlatform, vpc, false, internalLoadBalancerSecurityGroup, restApiSecurityGroup, db, policy);
+            var frontEndInstances = new AutoScaledInstances(this, targetPlatform, vpc, true, externalLoadBalancerSecurityGroup, frontEndSecurityGroup, db, restApiLoadBalancer: restApiInstances.Result.LoadBalancer);
+            //var instances = new AutoScaledInstances(this, targetPlatform, vpc, appSecurityGroup);
+            new CICD(this, targetPlatform, frontEndInstances.Result, restApiInstances.Result);
         }
     }
 }

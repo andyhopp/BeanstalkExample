@@ -1,0 +1,21 @@
+version: 0.0
+os: linux
+files:
+  - source: ./publish
+    destination: /opt/dotnet-example
+hooks:
+  BeforeInstall:
+    - location: scripts/install-dotnet.sh
+      timeout: 300
+  ApplicationStop: 
+    - location: scripts/stop-service.sh
+      timeout: 60
+  AfterInstall: 
+    - location: scripts/register-service.sh
+      timeout: 120
+  ApplicationStart: 
+    - location: scripts/start-service.sh
+      timeout: 60
+  ValidateService: 
+    - location: scripts/smoke-test.sh
+      timeout: 60

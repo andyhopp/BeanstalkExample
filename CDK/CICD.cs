@@ -15,7 +15,11 @@ namespace Cdk
         public const string SourceBucketName = "us-east-1.andyhoppatamazon.com";
         public static string SourceBucketKey { get; set; }
 
-        internal CICD(CdkStack stack, CfnParameter targetPlatform, LoadBalancedInstancesResult instanceInfo)
+        internal CICD(
+            CdkStack stack, 
+            CfnParameter targetPlatform, 
+            LoadBalancedInstancesResult frontEndInstanceInfo,
+            LoadBalancedInstancesResult restAPIInstanceInfo)
         {
             var artifactBucket = new Bucket(stack, "ArtifactBucket");
             var repo = new Repository(stack, "ApplicationRepository", new RepositoryProps
@@ -49,31 +53,45 @@ namespace Cdk
                     }
                 }
             });
-            var codeDeployApplication = new ServerApplication(stack, "ApplicationDeployment", new ServerApplicationProps
+            var frontEndApplication = new ServerApplication(stack, "FrontEnd", new ServerApplicationProps
             {
-                ApplicationName = stack.StackName
+                ApplicationName = $"{stack.StackName}-FrontEnd"
             });
-            var deploymentGroup = new ServerDeploymentGroup(stack, "ApplicationDeploymentGroup", new ServerDeploymentGroupProps
+            var frontEndDeploymentGroup = new ServerDeploymentGroup(stack, "FrontEndDeploymentGroup", new ServerDeploymentGroupProps
             {
-                Application = codeDeployApplication,
-                DeploymentGroupName = $"{stack.StackName.ToLower()}-deployment-group",
-                Role = new Role(stack, "DeploymentServiceRole", new RoleProps
-                {
-                    AssumedBy = new ServicePrincipal("codedeploy.amazonaws.com"),
-                    Description = "Allows Application Deployment.",
-                    ManagedPolicies = new[] { ManagedPolicy.FromAwsManagedPolicyName("service-role/AWSCodeDeployRole") }
-                }),
-                AutoRollback = new AutoRollbackConfig { FailedDeployment = true },
-                DeploymentConfig = ServerDeploymentConfig.HALF_AT_A_TIME,
-                LoadBalancer = LoadBalancer.Application(instanceInfo.TargetGroup),
-                AutoScalingGroups = new[] { instanceInfo.AutoScalingGroup }
+                Application = frontEndApplication,
+                DeploymentGroupName = $"{stack.StackName.ToLower()}-frontend-deployment-group",
+                //Role = new Role(stack, "DeploymentServiceRole", new RoleProps
+                //{
+                //    AssumedBy = new ServicePrincipal("codedeploy.amazonaws.com"),
+                //    Description = "Allows Application Deployment.",
+                //    ManagedPolicies = new[] { ManagedPolicy.FromAwsManagedPolicyName("service-role/AWSCodeDeployRole") }
+                //}),
+                //AutoRollback = new AutoRollbackConfig { FailedDeployment = true },
+                //DeploymentConfig = ServerDeploymentConfig.HALF_AT_A_TIME,
+                LoadBalancer = LoadBalancer.Application(frontEndInstanceInfo.TargetGroup),
+                AutoScalingGroups = new[] { frontEndInstanceInfo.AutoScalingGroup }
+            });
+            var restApiApplication = new ServerApplication(stack, "RestAPI", new ServerApplicationProps
+            {
+                ApplicationName = $"{stack.StackName}-RESTAPI"
+            });
+            var restApiDeploymentGroup = new ServerDeploymentGroup(stack, "RestAPIDeploymentGroup", new ServerDeploymentGroupProps
+            {
+                Application = restApiApplication,
+                DeploymentGroupName = $"{stack.StackName.ToLower()}-restapi-deployment-group",
+                //AutoRollback = new AutoRollbackConfig { FailedDeployment = true },
+                //DeploymentConfig = ServerDeploymentConfig.HALF_AT_A_TIME,
+                LoadBalancer = LoadBalancer.Application(restAPIInstanceInfo.TargetGroup),
+                AutoScalingGroups = new[] { restAPIInstanceInfo.AutoScalingGroup }
             });
             var sourceOutput = new Artifact_();
-            var buildArtifacts = new Artifact_("BuildOutput");
+            var frontEndArtifacts = new Artifact_("FrontEnddOutput");
+            var restAPIArtifacts = new Artifact_("RESTAPIOutput");
             var pipeline = new Pipeline(stack, "ApplicationPipeline", new PipelineProps
             {
                 ArtifactBucket = artifactBucket,
-                PipelineName = $"{stack.StackName}Pipeline",
+                PipelineName = $"{stack.StackName}-Pipeline",
                 Stages = new[]
                   {
                     new Amazon.CDK.AWS.CodePipeline.StageProps
@@ -99,7 +117,7 @@ namespace Cdk
                                 ActionName = "CodeBuild",
                                 Project = build,
                                 Input = sourceOutput,
-                                Outputs = new [] { buildArtifacts }
+                                Outputs = new [] { frontEndArtifacts, restAPIArtifacts }
                             })
                         }
                     },
@@ -110,8 +128,13 @@ namespace Cdk
                         {
                             new CodeDeployServerDeployAction(new CodeDeployServerDeployActionProps {
                                 ActionName = "CodeDeploy",
-                                DeploymentGroup = deploymentGroup,
-                                Input = buildArtifacts
+                                DeploymentGroup = frontEndDeploymentGroup,
+                                Input = frontEndArtifacts
+                            }),
+                            new CodeDeployServerDeployAction(new CodeDeployServerDeployActionProps {
+                                ActionName = "CodeDeploy",
+                                DeploymentGroup = restApiDeploymentGroup,
+                                Input = restAPIArtifacts
                             })
                         }
                     }
