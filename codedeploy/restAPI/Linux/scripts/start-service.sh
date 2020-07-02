@@ -1,2 +1,2 @@
 #!/bin/bash
-service WebApp start
+service RESTAPI start

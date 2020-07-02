@@ -21,36 +21,67 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cdk", "CDK\Cdk.csproj", "{C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeDeploy", "CodeDeploy", "{3939954F-F9EC-4F6E-88AE-FC83C9E27B2F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "windows", "windows", "{A9DECF9D-712E-4514-9A7E-8575B5873DC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASPNETExample.Core.API", "ASPNETExample.Core.API\ASPNETExample.Core.API.csproj", "{BA360C84-6835-4915-94E2-C823ADF69B39}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "frontEnd", "frontEnd", "{DB6A7511-1A29-40FD-A4F4-93703002FB82}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "restAPI", "restAPI", "{C985B771-D06A-48A6-B51B-12B819C5D637}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows", "Windows", "{89299B28-A642-4CAC-8EAD-452EB2FA6F7A}"
 	ProjectSection(SolutionItems) = preProject
-		codedeploy\windows\appspec.yml = codedeploy\windows\appspec.yml
+		codedeploy\frontEnd\Windows\appspec.yml = codedeploy\frontEnd\Windows\appspec.yml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "linux", "linux", "{575D5B52-EE9D-41CC-A093-E1FAB81793B0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Linux", "Linux", "{BD4448B0-8E67-464A-A6C9-99C1E33EEF31}"
 	ProjectSection(SolutionItems) = preProject
-		codedeploy\linux\appspec.yml = codedeploy\linux\appspec.yml
+		codedeploy\frontEnd\Linux\appspec.yml = codedeploy\frontEnd\Linux\appspec.yml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{98FCB7C0-9873-4238-BF55-FF8C740D1EC2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Windows", "Windows", "{AFBA855D-D7F0-452E-8AE2-D468D6536BD7}"
 	ProjectSection(SolutionItems) = preProject
-		codedeploy\Linux\scripts\.gitattributes = codedeploy\Linux\scripts\.gitattributes
-		codedeploy\Linux\scripts\install-dotnet.sh = codedeploy\Linux\scripts\install-dotnet.sh
-		codedeploy\linux\scripts\register-service.sh = codedeploy\linux\scripts\register-service.sh
-		codedeploy\linux\scripts\smoke-test.sh = codedeploy\linux\scripts\smoke-test.sh
-		codedeploy\linux\scripts\start-service.sh = codedeploy\linux\scripts\start-service.sh
-		codedeploy\linux\scripts\stop-service.sh = codedeploy\linux\scripts\stop-service.sh
+		codedeploy\restAPI\Windows\appspec.yml = codedeploy\restAPI\Windows\appspec.yml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{6C125BFD-DC40-4B69-91BB-159EC5B57BF3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Linux", "Linux", "{1379C222-8CD6-4435-AC81-457C64CC14E9}"
 	ProjectSection(SolutionItems) = preProject
-		codedeploy\Windows\scripts\InstallDotNet.ps1 = codedeploy\Windows\scripts\InstallDotNet.ps1
-		codedeploy\windows\scripts\RegisterService.ps1 = codedeploy\windows\scripts\RegisterService.ps1
-		codedeploy\windows\scripts\SmokeTest.ps1 = codedeploy\windows\scripts\SmokeTest.ps1
-		codedeploy\windows\scripts\StartService.ps1 = codedeploy\windows\scripts\StartService.ps1
-		codedeploy\windows\scripts\StopService.ps1 = codedeploy\windows\scripts\StopService.ps1
+		codedeploy\restAPI\Linux\appspec.yml = codedeploy\restAPI\Linux\appspec.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPNETExample.Core.API", "ASPNETExample.Core.API\ASPNETExample.Core.API.csproj", "{BA360C84-6835-4915-94E2-C823ADF69B39}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{B54CC8D7-59BE-47D1-A9A4-B7DC417E85DE}"
+	ProjectSection(SolutionItems) = preProject
+		codedeploy\frontEnd\Linux\scripts\install-dotnet.sh = codedeploy\frontEnd\Linux\scripts\install-dotnet.sh
+		codedeploy\frontEnd\Linux\scripts\register-service.sh = codedeploy\frontEnd\Linux\scripts\register-service.sh
+		codedeploy\frontEnd\Linux\scripts\smoke-test.sh = codedeploy\frontEnd\Linux\scripts\smoke-test.sh
+		codedeploy\frontEnd\Linux\scripts\start-service.sh = codedeploy\frontEnd\Linux\scripts\start-service.sh
+		codedeploy\frontEnd\Linux\scripts\stop-service.sh = codedeploy\frontEnd\Linux\scripts\stop-service.sh
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{B7D06E54-4F56-4018-9F03-ABC2440498EE}"
+	ProjectSection(SolutionItems) = preProject
+		codedeploy\frontEnd\Windows\scripts\InstallDotNet.ps1 = codedeploy\frontEnd\Windows\scripts\InstallDotNet.ps1
+		codedeploy\frontEnd\Windows\scripts\RegisterService.ps1 = codedeploy\frontEnd\Windows\scripts\RegisterService.ps1
+		codedeploy\frontEnd\Windows\scripts\SmokeTest.ps1 = codedeploy\frontEnd\Windows\scripts\SmokeTest.ps1
+		codedeploy\frontEnd\Windows\scripts\StartService.ps1 = codedeploy\frontEnd\Windows\scripts\StartService.ps1
+		codedeploy\frontEnd\Windows\scripts\StopService.ps1 = codedeploy\frontEnd\Windows\scripts\StopService.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{9927C91B-020E-44E1-AF4E-C5520AFA2F09}"
+	ProjectSection(SolutionItems) = preProject
+		codedeploy\restAPI\Linux\scripts\install-dotnet.sh = codedeploy\restAPI\Linux\scripts\install-dotnet.sh
+		codedeploy\restAPI\Linux\scripts\register-service.sh = codedeploy\restAPI\Linux\scripts\register-service.sh
+		codedeploy\restAPI\Linux\scripts\smoke-test.sh = codedeploy\restAPI\Linux\scripts\smoke-test.sh
+		codedeploy\restAPI\Linux\scripts\start-service.sh = codedeploy\restAPI\Linux\scripts\start-service.sh
+		codedeploy\restAPI\Linux\scripts\stop-service.sh = codedeploy\restAPI\Linux\scripts\stop-service.sh
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{29DC651B-82B4-435A-AF2A-1FFD5C9BD595}"
+	ProjectSection(SolutionItems) = preProject
+		codedeploy\restAPI\Windows\scripts\InstallDotNet.ps1 = codedeploy\restAPI\Windows\scripts\InstallDotNet.ps1
+		codedeploy\restAPI\Windows\scripts\RegisterService.ps1 = codedeploy\restAPI\Windows\scripts\RegisterService.ps1
+		codedeploy\restAPI\Windows\scripts\SmokeTest.ps1 = codedeploy\restAPI\Windows\scripts\SmokeTest.ps1
+		codedeploy\restAPI\Windows\scripts\StartService.ps1 = codedeploy\restAPI\Windows\scripts\StartService.ps1
+		codedeploy\restAPI\Windows\scripts\StopService.ps1 = codedeploy\restAPI\Windows\scripts\StopService.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,10 +110,16 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{A9DECF9D-712E-4514-9A7E-8575B5873DC4} = {3939954F-F9EC-4F6E-88AE-FC83C9E27B2F}
-		{575D5B52-EE9D-41CC-A093-E1FAB81793B0} = {3939954F-F9EC-4F6E-88AE-FC83C9E27B2F}
-		{98FCB7C0-9873-4238-BF55-FF8C740D1EC2} = {575D5B52-EE9D-41CC-A093-E1FAB81793B0}
-		{6C125BFD-DC40-4B69-91BB-159EC5B57BF3} = {A9DECF9D-712E-4514-9A7E-8575B5873DC4}
+		{DB6A7511-1A29-40FD-A4F4-93703002FB82} = {3939954F-F9EC-4F6E-88AE-FC83C9E27B2F}
+		{C985B771-D06A-48A6-B51B-12B819C5D637} = {3939954F-F9EC-4F6E-88AE-FC83C9E27B2F}
+		{89299B28-A642-4CAC-8EAD-452EB2FA6F7A} = {DB6A7511-1A29-40FD-A4F4-93703002FB82}
+		{BD4448B0-8E67-464A-A6C9-99C1E33EEF31} = {DB6A7511-1A29-40FD-A4F4-93703002FB82}
+		{AFBA855D-D7F0-452E-8AE2-D468D6536BD7} = {C985B771-D06A-48A6-B51B-12B819C5D637}
+		{1379C222-8CD6-4435-AC81-457C64CC14E9} = {C985B771-D06A-48A6-B51B-12B819C5D637}
+		{B54CC8D7-59BE-47D1-A9A4-B7DC417E85DE} = {BD4448B0-8E67-464A-A6C9-99C1E33EEF31}
+		{B7D06E54-4F56-4018-9F03-ABC2440498EE} = {89299B28-A642-4CAC-8EAD-452EB2FA6F7A}
+		{9927C91B-020E-44E1-AF4E-C5520AFA2F09} = {1379C222-8CD6-4435-AC81-457C64CC14E9}
+		{29DC651B-82B4-435A-AF2A-1FFD5C9BD595} = {AFBA855D-D7F0-452E-8AE2-D468D6536BD7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {41D67C16-1152-4031-8733-E8A70B4101E8}

@@ -2,7 +2,7 @@
 which dotnet
 
 cd /lib/systemd/system  
-cat > WebApp.service <<EOF
+cat > RESTAPI.service <<EOF
 [Unit]  
 Description=.NET Core App 
   
