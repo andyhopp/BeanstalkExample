@@ -81,7 +81,7 @@ namespace Cdk
 
             var alb = new ApplicationLoadBalancer(stack, $"ApplicationLoadBalancer-{(publicAccess ? "public" : "private")}", new ApplicationLoadBalancerProps
             {
-                InternetFacing = true,
+                InternetFacing = publicAccess,
                 Vpc = vpc,
                 VpcSubnets = new SubnetSelection { SubnetType = publicAccess ? SubnetType.PUBLIC : SubnetType.PRIVATE },
                 SecurityGroup = albSecurityGroup,

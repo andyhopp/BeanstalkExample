@@ -1,19 +1,16 @@
 #!/bin/bash
-SERVICE_ID=rest-api
-SERVICE_PATH=/opt/$SERVICE_ID/
-SERVICE_NAME=RESTAPI
 
 cd /lib/systemd/system  
-cat > $SERVICE_NAME.service <<EOF
+cat > RESTAPI.service <<EOF
 [Unit]  
 Description=.NET Core App 
   
 [Service]  
-ExecStart=$SERVICE_PATHASPNETExample.Core.API --service --urls=http://+:80
+ExecStart=/opt/rest-api/ASPNETExample.Core.API --service --urls=http://+:80
 EnvironmentFile=/etc/environment
-WorkingDirectory=$SERVICE_PATH  
+WorkingDirectory=/opt/rest-api
 Restart=on-failure  
-SyslogIdentifier=$SERVICE_ID  
+SyslogIdentifier=rest-api
 PrivateTmp=true  
   
 [Install]  
@@ -21,4 +18,4 @@ WantedBy=multi-user.target
 EOF
 
 systemctl daemon-reload  
-systemctl enable $SERVICE_NAME.service 
+systemctl enable RESTAPI.service 
