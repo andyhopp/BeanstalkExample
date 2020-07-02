@@ -11,7 +11,8 @@ namespace Cdk
     internal class Database
     {
         internal ISecret Password { get; }
-        public string ServerAddress { get; internal set; }
+        public DatabaseInstance DatabaseResource { get; }
+        public string ServerAddress { get; }
 
         internal Database(CdkStack stack, Vpc vpc, SecurityGroup asgSecurityGroup)
         {            
@@ -34,6 +35,7 @@ namespace Cdk
                 InstanceType = InstanceType.Of(InstanceClass.BURSTABLE3, InstanceSize.SMALL),
                 DeletionProtection = false
             });
+            DatabaseResource = db;
             ServerAddress = db.DbInstanceEndpointAddress;
             Password = db.Secret;
         }

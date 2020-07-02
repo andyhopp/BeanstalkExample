@@ -4,6 +4,7 @@ using Amazon.CDK.AWS.EC2;
 using Amazon.CDK.AWS.ElasticLoadBalancingV2;
 using Amazon.CDK.AWS.IAM;
 using Amazon.CDK.AWS.SecretsManager;
+using Constructs;
 
 namespace Cdk
 {
@@ -157,6 +158,7 @@ namespace Cdk
             }
             if (database != null)
             {
+                asg.Node.AddDependency(database.DatabaseResource);
                 Tag.Add(asg, "DBSecretArn", database.Password.SecretArn);
             }
 

@@ -35,12 +35,7 @@ namespace ASPNETExample.Core.API
         {
             var tags = await new Amazon.EC2.AmazonEC2Client().DescribeTagsAsync();
             var passwordArnTag = tags.Tags.FirstOrDefault(T => T.Key == "DBSecretArn");
-#if DEBUG
-            passwordArnTag = new Amazon.EC2.Model.TagDescription
-            {
-                Value = "arn:aws:secretsmanager:us-east-1:982831078337:secret:qapi/prod/databaseCredentials-wJWBeO"
-            };
-#endif
+            Console.WriteLine($"DBSecretArn: {passwordArnTag.Value}");
             var password = await new Amazon.SecretsManager.AmazonSecretsManagerClient().GetSecretValueAsync(new Amazon.SecretsManager.Model.GetSecretValueRequest
             {
                 SecretId = passwordArnTag.Value
