@@ -34,6 +34,7 @@ namespace Cdk
                 Vpc = vpc,
                 Description = "Allows HTTP access to the application."
             });
+            externalLoadBalancerSecurityGroup.AddIngressRule(externalLoadBalancerSecurityGroup, Port.Tcp(80), "Allow HTTP");
             var frontEndSecurityGroup = new SecurityGroup(vpc, "UISecurityGroup", new SecurityGroupProps
             {
                 Vpc = vpc,
@@ -45,12 +46,13 @@ namespace Cdk
                 Vpc = vpc,
                 Description = "Allows HTTP access to the REST API."
             });
+            internalLoadBalancerSecurityGroup.AddIngressRule(frontEndSecurityGroup, Port.Tcp(80));
             var restApiSecurityGroup = new SecurityGroup(vpc, "ApiSecurityGroup", new SecurityGroupProps
             {
                 Vpc = vpc,
                 Description = "Allows HTTP access to the Rest API."
             });
-
+            restApiSecurityGroup.AddIngressRule(internalLoadBalancerSecurityGroup, Port.Tcp(80));
 
             var db = new Database(this, vpc, restApiSecurityGroup);
 
