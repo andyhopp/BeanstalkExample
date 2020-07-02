@@ -6,5 +6,5 @@ curl -s -S \
   --retry 5 \
   --retry-delay 0 \
   --retry-max-time 40 \
-  http://localhost:80 \
+  http://localhost:80/SmokeTest \
   > /dev/null
