@@ -157,8 +157,7 @@ namespace Cdk
             }
             if (database != null)
             {
-                Tag.Add(asg, "DatabaseAddress", database.ServerAddress);
-                Tag.Add(asg, "PasswordArn", database.Password.SecretArn);
+                Tag.Add(asg, "DBSecretArn", database.Password.SecretArn);
             }
 
             // Enable access from the ALB

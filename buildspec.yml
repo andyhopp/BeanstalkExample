@@ -13,12 +13,12 @@ phases:
           echo "Building front-end code..."
           pushd ASPNETExample.Core
           libman restore
-          dotnet publish -c Release -o ../build/publish/frontEnd
+          dotnet publish -c Release -o ../build/frontEnd/publish
           popd
         - |
           echo "Building REST API code..."
           pushd ASPNETExample.Core.API
-          dotnet publish -c Release -o ../build/publish/restAPI
+          dotnet publish -c Release -o ../build/restAPI/publish
           popd
         - echo "Build completed."
     # Prepare for CodeDeploy deployment
