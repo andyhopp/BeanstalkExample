@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: ./publish
-    destination: /opt/dotnet-example
+    destination: /opt/rest-api
 hooks:
   BeforeInstall:
     - location: scripts/install-dotnet.sh
